@@ -1,0 +1,159 @@
+import tkinter as Tkinter
+from datetime import datetime
+from tkinter import *
+#
+# # splash Screen
+# splash_root = Tkinter.Tk()
+# splash_root.geometry("200x200")
+#
+# # Set Label
+# bg = PhotoImage(file="Netra_icon.png")
+# splash_label = Label(splash_root, image=bg)
+# splash_label.pack()
+#
+#
+# def main():
+#     splash_root = Tk()
+# main()
+
+
+
+
+
+
+
+
+
+
+counter = 66600
+running = False
+def counter_label(lbl):
+    def count():
+        if running:
+            global counter
+            if counter == 66600:
+                display = "Starting..."
+            else:
+                tt = datetime.fromtimestamp(counter)
+                string = tt.strftime("%H:%M:%S")
+                display = string
+
+            lbl['text'] = display
+
+            # label.after(arg1, arg2) delays by
+            # first argument given in milliseconds
+            # and then calls the function given as second argument.
+            # Generally like here we need to call the
+            # function in which it is present repeatedly.
+            # Delays by 1000ms=1 seconds and call count again.
+            lbl.after(1000, count)
+        counter += 1
+
+    # Triggering the start of the counter.
+    count()
+
+
+def StartTimer(lbl):
+    global running
+    running = True
+    counter_label(lbl)
+    start_btn['state'] = 'disabled'
+    stop_btn['state'] = 'normal'
+    reset_btn['state'] = 'normal'
+
+
+def StopTimer():
+    global running
+    start_btn['state'] = 'normal'
+    stop_btn['state'] = 'disabled'
+    reset_btn['state'] = 'normal'
+    running = False
+
+
+# Reset function of the stopwatch
+def ResetTimer(lbl):
+    global counter
+    counter = 66600
+    # If rest is pressed after pressing stop
+    if running == False:
+        reset_btn['state'] = 'disabled'
+        lbl['text'] = 'Welcome'
+
+    # If reset is pressed while the stopwatch is running.
+    else:
+        lbl['text'] = 'Starting...'
+
+
+main_root = Tkinter.Tk()
+
+bg = Tkinter.PhotoImage(file='timer.png')
+img = Tkinter.Label(main_root, image=bg, bg='#b3d9ff')
+img.place(x=0, y=5)
+
+# lbl = Tkinter.Label(
+#           main_root,
+#           text="00",
+#            fg="black",
+#           bg='#b3d9ff',
+#           font="comfortaa 40 bold"
+#       )
+
+# label_msg = Tkinter.Label(
+#           main_root, text="Meeting duration in seconds",
+#          fg="black",
+#        bg='#b3d9ff',
+#        font="comfortaa 10 bold"
+#    )
+
+# lbl.place(x=150, y=170)
+# label_msg.place(x=105, y=250)
+
+start_btn = Tkinter.Button(
+    main_root,
+    text='Start',
+    width=15,
+    command=lambda: StartTimer(lbl)
+)
+
+stop_btn = Tkinter.Button(
+    main_root,
+    text='Stop',
+    width=15,
+    state='disabled',
+    command=StopTimer
+)
+
+reset_btn = Tkinter.Button(
+    main_root,
+    text='Reset',
+    width=15,
+    state='disabled',
+    command=lambda: ResetTimer(lbl)
+)
+
+start_btn.place(x=30, y=500)
+stop_btn.place(x=150, y=500)
+reset_btn.place(x=270, y=500)
+
+main_root.minsize(width=644, height=434)
+
+# creating a stop watch for counting the duration of meeting
+main_root.title('PythonGuides:Timer')
+main_root.config(bg='#b3d9ff')
+main_root.iconbitmap('NETRA-ICON.ico')
+
+lbl = Tkinter.Label(main_root, text="Welcome!", fg="black", font="Comfortaa 20 bold", bg='#b3d9ff')
+lbl.pack()
+f = Tkinter.Frame(main_root)
+lbl.place(x=120, y=200)
+#start = Tkinter.Button(f, text='Start', width=6, command=lambda: StartTimer(lbl))
+#stop = Tkinter.Button(f, text='Stop', width=6, state='normal', command=StopTimer)
+#reset = Tkinter.Button(f, text='Reset', width=6, state='normal', command=lambda: ResetTimer(lbl))
+#f.pack(anchor='sw', pady=5)
+#start.pack(side="left")
+#stop.pack(side="left")
+#reset.pack(side="left")
+
+
+# gui logic
+main_root.mainloop()
